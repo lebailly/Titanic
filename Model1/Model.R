@@ -27,7 +27,10 @@ main <- function(train_file = '../Data/split1.csv', test_file = '../Data/split2.
 	y <- train$Survived
 
 	theta <- c(0,0,0,0)
-	theta <- GradiantDescent(X,y,theta,0.001,150)
+	print(ComputeGrad(X,y,theta))
+	theta <- GradiantDescent(X,y,theta,0.001,200)
+	print(ComputeGrad(X,y,theta))
+
 	names(theta) <- c('Constant','Sex','Age','Pclass')
 	cat('Theta =\n')
 	print(theta)
@@ -137,6 +140,18 @@ GradiantDescent <- function(X,y,theta,alpha,num_iters)
 		num_iters, end-start,dim(X)[1], dim(X)[2]))
 
 	return(theta)
+}
+
+ComputeGrad <- function(X,y,theta, alpha=0.001)
+{
+	h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
+	K <- apply(X,1,h) - y
+
+	grad <- numeric(0)
+
+	for(j in 1:dim(X)[2]) grad[j] <- c(grad,alpha*sum(K*X[,j]))
+
+	grad
 }
 
 

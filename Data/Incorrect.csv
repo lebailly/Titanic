@@ -1,0 +1,28 @@
+"PassengerId","Survived","Pclass","Name","Sex","Age","SibSp","Parch","Ticket","Fare","Cabin","Embarked","Psurvival","Prediction"
+725,1,1,"Chambers, Mr. Norman Campbell","male",27,1,0,"113806",53.1,"E8","S",0.448671845547958,0
+730,0,3,"Ilmakangas, Miss. Pieta Sofia","female",25,1,0,"STON/O2. 3101271",7.925,"","S",0.612053296835759,1
+738,1,1,"Lesurer, Mr. Gustave J","male",35,0,0,"PC 17755",512.3292,"B101","C",0.384894327628488,0
+745,1,3,"Stranden, Mr. Juho","male",31,0,0,"STON/O 2. 3101288",7.925,"","S",0.0883371428893408,0
+749,0,1,"Marvin, Mr. Daniel Warner","male",19,1,0,"113773",53.1,"D30","S",0.514183293084461,1
+752,1,3,"Moor, Master. Meier","male",6,0,1,"392096",12.475,"E121","S",0.180509299508368,0
+756,1,2,"Hamalainen, Master. Viljo","male",0.67,1,1,"250649",14.5,"","S",0.415935758099032,0
+763,1,3,"Barah, Mr. Hanna Assi","male",20,0,0,"2663",7.2292,"","C",0.122090847461253,0
+768,0,3,"Mangan, Miss. Mary","female",30.5,0,0,"364850",7.75,"","Q",0.56839001347236,1
+773,0,2,"Mack, Mrs. (Mary)","female",57,0,0,"S.O./P.P. 3",10.5,"E77","S",0.599442556486365,1
+789,1,3,"Dean, Master. Bertram Vere","male",1,1,2,"C.A. 2315",20.575,"","S",0.206089697512573,0
+800,0,3,"Van Impe, Mrs. Jean Baptiste (Rosalie Paula Govaert)","female",30,1,1,"345773",24.15,"","S",0.57241462745092,1
+804,1,3,"Thomas, Master. Assad Alexander","male",0.42,0,1,"2625",8.5167,"","C",0.209224389049262,0
+805,1,3,"Hedman, Mr. Oskar Arvid","male",27,0,0,"347089",6.975,"","S",0.0995068410911203,0
+808,0,3,"Pettersson, Miss. Ellen Natalia","female",18,0,0,"347087",7.775,"","S",0.665051985149411,1
+814,0,3,"Andersson, Miss. Ebba Iris Alfrida","female",6,4,2,"347082",31.275,"","S",0.746507250662425,1
+817,0,3,"Heininen, Miss. Wendla Maria","female",23,0,0,"STON/O2. 3101290",7.925,"","S",0.627533067397779,1
+822,1,3,"Lulic, Mr. Nikola","male",27,0,0,"315098",8.6625,"","S",0.0995068410911203,0
+828,1,2,"Mallet, Master. Andre","male",1,0,2,"S.C./PARIS 2079",37.0042,"","C",0.413304795960668,0
+832,1,2,"Richards, Master. George Sibley","male",0.83,1,1,"29106",18.75,"","S",0.414659531990592,0
+839,1,3,"Chip, Mr. Chang","male",32,0,0,"1601",56.4958,"","S",0.0857272702584464,0
+853,0,3,"Boulos, Miss. Nourelain","female",9,1,1,"2678",15.2458,"","C",0.727410714703946,1
+855,0,2,"Carter, Mrs. Ernest Courtenay (Lilian Hughes)","female",44,1,0,"244252",26,"","S",0.69639120347771,1
+858,1,1,"Daly, Mr. Peter Denis ","male",51,0,0,"113055",26.55,"E17","S",0.270044087266754,0
+870,1,3,"Johnson, Master. Harold Theodor","male",4,1,1,"347742",11.1333,"","S",0.190432238961446,0
+883,0,3,"Dahlberg, Miss. Gerda Ulrika","female",22,0,0,"7552",10.5167,"","S",0.635178172958904,1
+890,1,1,"Behr, Mr. Karl Howell","male",26,0,0,"111369",30,"C148","C",0.456810382417487,0

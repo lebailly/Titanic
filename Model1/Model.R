@@ -14,6 +14,7 @@ main <- function()
 	theta <- c(1.678795,  2.592295, -2.331269, -2.994373) #rep(0,4)
 	#theta <- optim(theta,cost)$par
 	#Find better way to cache this!
+	cost(theta)
 
 	#My gradiant decent solution found optimial theta to be 
 	#c(-0.3093811,  2.3394740, -0.5074464, -1.2551855)
@@ -118,13 +119,9 @@ CreateCost <- function(X,y)
 	function(theta)
 	{
 		h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
-
 		m <- dim(X)[1]
-		J <- 0
 
-		for(i in 1:m) J <- J - (y[i]*log(h(X[i,])) + (1-y[i])*log(1-h(X[i,])))/m
-
-		return(J)
+		-sum(y*log(apply(X,1,h)) + log(1-apply(X,1,h))*(1-y))/m
 	}
 
 }

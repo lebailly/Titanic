@@ -11,10 +11,13 @@ main <- function()
 	y <- train$Survived
 
 	cost <- CreateCost(X,y)
-	theta <- c(1.678795,  2.592295, -2.331269, -2.994373) #Find better way to cache this! (should be rep(0,4))
-	#My solution found optimial theta to be c(-0.3093811,  2.3394740, -0.5074464, -1.2551855)
+	theta <- c(1.678795,  2.592295, -2.331269, -2.994373) #rep(0,4)
 	#theta <- optim(theta,cost)$par
+	#Find better way to cache this!
 
+	#My gradiant decent solution found optimial theta to be 
+	#c(-0.3093811,  2.3394740, -0.5074464, -1.2551855)
+	
 	names(theta) <- c('Constant','Sex','Age','Pclass')
 
 	print(list(Theta=theta, Scale=scale))
@@ -68,18 +71,18 @@ ComputeScale <- function(data)
 
 ScaleFeatures <- function(data, scale)
 {
-	data[,'Sex'] <- data[,'Sex']/scale['Sex']
-	data[,'Age'] <- data[,'Age']/scale['Age']
-	data[,'Pclass'] <- data[,'Pclass']/scale['Pclass']
+	data$Sex <- data$Sex/scale['Sex']
+	data$Age <- data$Age/scale['Age']
+	data$Pclass <- data$Pclass/scale['Pclass']
 
 	data
 }
 
 UnscaleFeatures <- function(data, scale)
 {
-	data[,'Sex'] <- data[,'Sex']*scale['Sex']
-	data[,'Age'] <- as.integer(data[,'Age']*scale['Age']) #ATTEN - Why some give decimal?
-	data[,'Pclass'] <- data[,'Pclass']*scale['Pclass']
+	data$Sex <- data$Sex*scale['Sex']
+	data$Age <- data$Age*scale['Age']
+	data$Pclass <- data$Pclass*scale['Pclass']
 
 	data
 }

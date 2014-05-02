@@ -2,17 +2,9 @@
 
 #ATTEN - Clean up!
 
-main <- function(train_file = '../Data/split1.csv', test_file = '../Data/split2.csv')
+main <- function()
 {
-	args <- commandArgs(trailingOnly = TRUE)
-	if(length(args) == 2)
-	{
-		train_file <- args[1]
-		test_file <- args[2]
-	}
-
-	train <- ImportData(train_file)
-	test <- ImportData(test_file) #Move below? ATTEN
+	ImportData()
 
 	#Feature Scaling (move to a function? Better implementatoin? ATTEN)
 	scale <- c(1,1,max(train$Age), max(train$Pclass))
@@ -27,10 +19,8 @@ main <- function(train_file = '../Data/split1.csv', test_file = '../Data/split2.
 	y <- train$Survived
 
 	cost <- CreateCost(X,y)
-
-	theta <- c(0,0,0,0)
-
-	#print(ComputeGrad(X,y,theta))
+	theta <- c(1.678795,  2.592295, -2.331269, -2.994373) #Find better way to cache this! (should be rep(0,4))
+	#My solution found optimial theta to be c(-0.3093811,  2.3394740, -0.5074464, -1.2551855)
 	theta <- optim(theta,cost)$par
 
 	names(theta) <- c('Constant','Sex','Age','Pclass')
@@ -57,9 +47,9 @@ main <- function(train_file = '../Data/split1.csv', test_file = '../Data/split2.
 
 	X2$Psurvival <- probs
 	X2$Prediction <- predictions
-	X2$Actual <- y
+	X2$Actual <- y2 #ATTEN - Double check this in previous versions.
 	
-	print(head(X2[X2$Prediction != X2$Actual,]))
+	print(X2[X2$Prediction != X2$Actual,])
 
 	pdf('Incorrect.pdf')
 	hist(X2[X2$Prediction != X2$Actual,]$Psurvival)
@@ -74,13 +64,10 @@ main <- function(train_file = '../Data/split1.csv', test_file = '../Data/split2.
 	dev.off()
 
 	accuracy <- 100*(1-sum(abs(predictions-y2))/length(y2))
-	cat(sprintf('This model accurately predicts %.2f%% of the data in %s.\n',
-		accuracy, test_file))
-
-
+	cat(sprintf('This model accurately predicts %.2f%% of the data \n',accuracy))
 }
 
-ImportData <- function(source)
+ImportData <- function(source='../Data/train.csv',train_ratio=0.6,val_ratio=0.2)
 #Pre-condition: source is a filename where the data is located
 #Post-conditino: Reads data from source, labels males as 0 and females 1
 {
@@ -96,7 +83,12 @@ ImportData <- function(source)
 	data$Sex[data$Sex=='female'] <- 1
 	data$Sex <- as.numeric(data$Sex)
 
-	return(data)
+	train_max <- floor(nrow(data)*train_ratio)
+	test_max <- floor(nrow(data)*(train_ratio+val_ratio))
+
+	train <<- data[1:train_max,]
+	val <<- data[(train_max+1):test_max,]
+	test <<- data[(test_max+1):nrow(data),] #ATTEN - something other than nrow?
 }
 
 CreateCost <- function(X,y)
@@ -113,18 +105,6 @@ CreateCost <- function(X,y)
 		return(J)
 	}
 
-}
-
-ComputeGrad <- function(X,y,theta, alpha=0.001) #ATTEN - FIX THIS FUNCTION!
-{
-	h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
-	K <- apply(X,1,h) - y
-
-	grad <- numeric(0)
-
-	for(j in 1:dim(X)[2]) grad[j] <- c(grad,alpha*sum(K*X[,j]))
-
-	grad
 }
 
 main()

@@ -115,12 +115,12 @@ ImportData <- function(source='../Data/train.csv',train_ratio=0.6,val_ratio=0.2)
 
 CreateCost <- function(X,y,lambda=0)
 {
-	h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
 	m <- nrow(X)
 
 	function(theta)
 	{
-		-sum(y*log(apply(X,1,h)) + log(1-apply(X,1,h))*(1-y))/m+lambda*X[-1]^2
+		h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
+		-sum(y*log(apply(X,1,h))+log(1-apply(X,1,h))*(1-y))/m+lambda*sum(X[-1]^2)
 	}
 }
 

@@ -26,12 +26,15 @@ main <- function(train_file = '../Data/split1.csv', test_file = '../Data/split2.
 	X <- train[c('Constant','Sex','Age','Pclass')]
 	y <- train$Survived
 
+	cost <- CreateCost(X,y)
+
 	theta <- c(0,0,0,0)
-	print(ComputeGrad(X,y,theta))
-	theta <- GradiantDescent(X,y,theta,0.001,200)
-	print(ComputeGrad(X,y,theta))
+
+	#print(ComputeGrad(X,y,theta))
+	theta <- optim(theta,cost)$par
 
 	names(theta) <- c('Constant','Sex','Age','Pclass')
+
 	cat('Theta =\n')
 	print(theta)
 
@@ -96,53 +99,23 @@ ImportData <- function(source)
 	return(data)
 }
 
-ComputeCost <- function(X,y,theta)
-#Pre-condition:
-#Post-condition:
+CreateCost <- function(X,y)
 {
-	h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
-
-	m <- dim(X)[1]
-	J <- 0
-
-	for(i in 1:m) J <- J - (y[i]*log(h(X[i,])) + (1-y[i])*log(1-h(X[i,])))/m
-
-	return(J)
-}
-
-GradiantDescent <- function(X,y,theta,alpha,num_iters)
-#Pre-condition: data is data frame with
-{
-	J_history <- c()
-
-	start <- Sys.time()
-
-	for(i in 1:num_iters)
+	function(theta)
 	{
 		h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
 
-		K <- apply(X,1,h) - y
+		m <- dim(X)[1]
+		J <- 0
 
-		temp <- c()
-		for(j in 1:dim(X)[2]) temp[j] <- theta[j] - alpha*sum(K*X[,j])
+		for(i in 1:m) J <- J - (y[i]*log(h(X[i,])) + (1-y[i])*log(1-h(X[i,])))/m
 
-		theta <- temp
-		J_history[i] = ComputeCost(X,y,theta)
+		return(J)
 	}
 
-	end <- Sys.time()
-
-	pdf('Cost.pdf')
-	plot(J_history)
-	dev.off()
-
-	cat(sprintf('Gradiant Descent with %i steps took %.2f seconds (n=%i & j=%i).\n',
-		num_iters, end-start,dim(X)[1], dim(X)[2]))
-
-	return(theta)
 }
 
-ComputeGrad <- function(X,y,theta, alpha=0.001)
+ComputeGrad <- function(X,y,theta, alpha=0.001) #ATTEN - FIX THIS FUNCTION!
 {
 	h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
 	K <- apply(X,1,h) - y
@@ -153,6 +126,5 @@ ComputeGrad <- function(X,y,theta, alpha=0.001)
 
 	grad
 }
-
 
 main()

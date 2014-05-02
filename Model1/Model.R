@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/usr/bin/env Rscript
 
 main <- function()
 {
@@ -12,9 +12,8 @@ main <- function()
 
 	cost <- CreateCost(X,y)
 	theta <- c(1.678795,  2.592295, -2.331269, -2.994373) #rep(0,4)
-	#theta <- optim(theta,cost)$par
+	theta <- optim(theta,cost)$par
 	#Find better way to cache this!
-	cost(theta)
 
 	#My gradiant decent solution found optimial theta to be 
 	#c(-0.3093811,  2.3394740, -0.5074464, -1.2551855)
@@ -114,16 +113,15 @@ ImportData <- function(source='../Data/train.csv',train_ratio=0.6,val_ratio=0.2)
 	test <<- data[(test_max+1):nrow(data),] #ATTEN - something other than nrow?
 }
 
-CreateCost <- function(X,y)
+CreateCost <- function(X,y,lambda=0)
 {
+	h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
+	m <- nrow(X)
+
 	function(theta)
 	{
-		h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
-		m <- dim(X)[1]
-
-		-sum(y*log(apply(X,1,h)) + log(1-apply(X,1,h))*(1-y))/m
+		-sum(y*log(apply(X,1,h)) + log(1-apply(X,1,h))*(1-y))/m+lambda*X[-1]^2
 	}
-
 }
 
 main()

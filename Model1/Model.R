@@ -2,7 +2,7 @@
 
 main <- function()
 {
-	ImportData(train_ratio=0.5) 
+	ImportData()
 
 	theta <- TrainModel(train)
 	print(theta)

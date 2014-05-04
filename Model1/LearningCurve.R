@@ -7,22 +7,22 @@ main <- function()
 	test_cost <- MakeCostFunct(
 		test[c('Constant','Sex','Age','Pclass')],test$Survived)
 
-	train_err <- c()
-	test_err <- c()
+	data <- data.frame()
 
-	size_list <- c(seq(50,300,by=20),nrow(train))
+	size_list <- c(seq(30,300,by=10))#,nrow(train))
 	for(size in size_list)
 	{
 		theta <- TrainModel(train[1:size,])
 		train_cost <- MakeCostFunct(train[1:size,
 			c('Constant','Sex','Age','Pclass')],train[1:size,'Survived'])
-
-		#print(c(train_cost(theta), test_cost(theta)))
-		train_err <- c(train_cost(theta), train_err)
-		test_err <- c(test_cost(theta), test_err)
+		data <- rbind(data,c(size,train_cost(theta), test_cost(theta)))
 	}
+	names(data) <- c('Size', 'TrainingError', 'TestError')
 
-	print(data.frame(train_err,test_err))
+	quartz(title='Learnign Curve',width=7,height=6)
+	matplot(data[1],data[c(2,3)], type='l')
+	message("Press Return To Continue")
+	invisible(readLines("stdin", n=1))
 }
 
 TrainModel <- function(train, lambda = 0)

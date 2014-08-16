@@ -52,7 +52,7 @@ ErrorAnalysis <- function(test)
 	write.csv(data,file='../Data/Incorrect.csv',row.names=F)
 
 	accuracy <- 100*(1-sum(abs(test$Prediction-test$Survived))/nrow(test))
-	cat(sprintf('This model accurately predicts %.2f%% of the data \n',accuracy))
+	cat(sprintf('This model accurately predicts %.2f%% of the data\n',accuracy))
 }
 
 ImportData <- function(source='../Data/train.csv',train_ratio=0.7)
@@ -84,8 +84,9 @@ MakeCostFunct <- function(X,y,lambda=0)
 	function(theta)
 	{
 		h <- function(z) 1/(1+exp(-t(theta) %*% as.numeric(z)))[1,1]
-		-sum(y*log(apply(X,1,h))+log(1-apply(X,1,h))*(1-y))/m+lambda*sum(theta[-1]^2)/(2*m)
+		-sum(y*log(apply(X,1,h))+log(1-apply(X,1,h))*(1-y))/m+
+												lambda*sum(theta[-1]^2)/(2*m)
 	}
 }
 
-main()
+if(!interactive()) main()

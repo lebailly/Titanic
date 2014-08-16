@@ -9,7 +9,7 @@ main <- function()
 
 	data <- data.frame()
 
-	size_list <- c(seq(30,300,by=10))#,nrow(train))
+	size_list <- c(seq(30,350,by=5))#,nrow(train))
 	for(size in size_list)
 	{
 		theta <- TrainModel(train[1:size,])
@@ -19,10 +19,10 @@ main <- function()
 	}
 	names(data) <- c('Size', 'TrainingError', 'TestError')
 
-	quartz(title='Learnign Curve',width=7,height=6)
-	matplot(data[1],data[c(2,3)], type='l')
-	message("Press Return To Continue")
-	invisible(readLines("stdin", n=1))
+	pdf('LearningCurves.pdf',height=6,width=6)
+	matplot(data[1],data[c(2,3)], type='l', xlab = 'Training Size', ylab = 'Cost', pch=20, col=c(2,4))
+	title(main = 'Learning Curve')
+	legend("bottomright", inset=.05, legend=c("Training", "Test"), pch=20, col=c(2,4), horiz=T)
 }
 
 TrainModel <- function(train, lambda = 0)
@@ -48,9 +48,8 @@ ImportData <- function(source='../Data/train.csv',train_ratio=0.7)
 #Pre-condition: source is a filename where the data is located
 #Post-conditino: Reads data from source, labels males as 0 and females 1
 {
-	original_data <<- read.csv(source, stringsAsFactors=F)
+	data <- read.csv(source, stringsAsFactors=F)
 
-	data <- original_data
 	data <- data[c('Survived','Sex','Age','Pclass')]
 	data <- na.omit(data) 
 

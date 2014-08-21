@@ -19,7 +19,7 @@ main <- function()
 	}
 	names(data) <- c('Size', 'TrainingError', 'TestError')
 
-	pdf('LearningCurves.pdf',height=6,width=6)
+	pdf('Graphs/LearningCurves.pdf',height=6,width=6)
 	matplot(data[1],data[c(2,3)], type='l', xlab = 'Training Size', ylab = 'Cost', pch=20, col=c(2,4))
 	title(main = 'Learning Curve')
 	legend("bottomright", inset=.05, legend=c("Training", "Test"), pch=20, col=c(2,4), horiz=T)
@@ -44,7 +44,7 @@ TrainModel <- function(train, lambda = 0)
 	theta/scale
 }
 
-ImportData <- function(source='../Data/train.csv',train_ratio=0.7)
+ImportData <- function(source='Data/train.csv',train_ratio=0.7)
 #Pre-condition: source is a filename where the data is located
 #Post-conditino: Reads data from source, labels males as 0 and females 1
 {

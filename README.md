@@ -24,13 +24,19 @@ These two optimization methods produce different results.  The builtin optim fun
 
 Next I played around with regularizatoin.  It was simple to add a regularization term to the cost function.  However increase lambada (the amount of regularization) seemed to make the performance worse.  This is not surprising since we are using a linear decision boundary, and hence it is likely that this model is under-fitting the data.  To verify this I wrote `LearningCurve.R`, which confirmed that this model is under-fitting that data (see `Graphs/LearningCurves.pdf`).  Hence regulization won't help (as it's only useful for a model overfitting data).
 
-### Using builtin models (such as the `caret` package)
+### Using builtin training packages (such as `caret`)
 
-After this I decided to try some more builtin functions via `caret` (as in general I won't want to program all my machine learnign algorithms manually).
+After this I decided to try some more builtin functions via `caret` (since I don't want to program all my machine learnign algorithms from scratch).  Running this against the test data set gave the same results using the manual method with the `optim` method.  To run this, simply run `./RModels.R logistic omit`.  The omit simply means any entries with missing data are ommitted.
+
+### Missing Data - Imputing Age
+
+Up to this point, I simply had ignored missing data.  Any entry that didn't have either the age, gender, or passenger was ignored.  Perhaps my model would function better if I imputed the age.
+
+We do have more information - perhaps some will help predict age for the missing data.  We have names for all the passengers, and these names include a tiltle (such as "Mr.", "Miss", and so forth).  For the passengers with known ages, I grouped them by title and comptued the average age for each title group.  Then, for each passenger with a missing age, I replaced their age with the approriate title group's mean age. 
+
+Running `./RModels.R logistic impute_age` will impute the age data.  However, in the end this did not make much a difference, having an accuracy of 79.1% on the test set.
 
 ## Future Work
-
-* I plan to add more models as I work on this.
 
 * How should I handel missing data?  I use a basic imputation method.  Other options?
 

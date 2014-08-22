@@ -5,20 +5,21 @@ library(caret)
 main <- function()
 {
   args <- commandArgs(trailingOnly = TRUE)
-  model = args[1]
+  method = args[1]
   imput = args[2]
   
 	ImportData(method=imput)
 
-  if(model == 'logistic')
+  if(method == 'logistic')
   {
     model <- train(Survived ~ ., method='glm', family='binomial', data = training)
+    print(model)
     pred <- predict(model, testing)
     pred[pred < 0.5] <- 0
     pred[pred >= 0.5] <- 1
   }
   
-  if(model == 'nn')
+  if(method == 'nn')
   {
     mode <- train(Survived ~ ., method='neuralnet', data = training)
     pred <- predict(model, testing)
@@ -28,7 +29,7 @@ main <- function()
 	which(pred != testing$Survived)
 }
 
-ImportData <- function(source='../Data/train.csv',train_ratio=0.7,method='omit')
+ImportData <- function(source='Data/train.csv',train_ratio=0.7,method='omit')
 #Pre-condition: source is a filename where the data is located
 #Post-conditino: Reads data from source, labels males as 0 and females 1
 {
@@ -71,4 +72,4 @@ ImportData <- function(source='../Data/train.csv',train_ratio=0.7,method='omit')
   #Use built in caret funct to split data (look at DS Specilizaiotn for name)
 }
 
-main()
+if(!interactive()) main()

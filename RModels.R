@@ -13,7 +13,7 @@ main <- function()
   if(method == 'logistic')
   {
     model <- train(Survived ~ ., method='glm', family='binomial', data = training)
-    print(model)
+    print(summary(model))
     pred <- predict(model, testing)
     pred[pred < 0.5] <- 0
     pred[pred >= 0.5] <- 1

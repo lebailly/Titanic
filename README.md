@@ -36,13 +36,5 @@ We do have more information - perhaps some will help predict age for the missing
 
 Running `./RModels.R logistic impute_age` will impute the age data.  However, in the end this did not make much a difference, having an accuracy of 79.1% on the test set.
 
-## Future Work
-
-* How should I handle missing data?  I use a basic imputation method.  Other options?
-
-* Add K-fold cross-validation ability.
-
-* Ability to Randomize test/cv/train break down.
-
 [1]: http://www.kaggle.com/c/titanic-gettingStarted
 [2]: https://www.coursera.org/course/ml
